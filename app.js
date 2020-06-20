@@ -19,9 +19,6 @@ let tries = 5;
 
 overlay.addEventListener("click", () => {
   overlay.style.display = "none";
-  guesses = [];
-  misses = [];
-  tries = 5;
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].style.backgroundColor = "#D2D2D2";
   }
@@ -33,6 +30,10 @@ overlay.addEventListener("click", () => {
 });
 
 function initialize() {
+  guesses = [];
+  misses = [];
+  tries = 5;
+  ul.innerHTML = '';
   for (let i = 0; i < phrase.length; i++) {
     const letter = phrase[i];
     const li = document.createElement("li");
@@ -57,12 +58,14 @@ function draw(letter) {
 
 function checkWon() {
   if (tries === 0) {
+    initialize();
     overlay.style.display = "flex";
     overlay.className = "lose";
     overlay.querySelector("a").textContent = "You lost. Try again?";
   }
   const phraseNoUnderscores = new Set(phrase.replace(/\s/g, ""));
   if (guesses.length == phraseNoUnderscores.size) {
+    initialize();
     overlay.style.display = "flex";
     overlay.className = "win";
     overlay.querySelector("a").textContent = "You win. Try again?";
